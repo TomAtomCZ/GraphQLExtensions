@@ -8,18 +8,16 @@
 
 namespace Youshido\GraphQLExtension\Type;
 
-
-use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\IntType;
 
 class PagingInfoType extends AbstractObjectType
 {
-    public function build($config)
+    public function build($config): void
     {
         $config->addFields([
-            'offset'     => new IntType(),
-            'limit'      => new IntType(),
+            'offset' => new IntType(),
+            'limit' => new IntType(),
             'totalCount' => new IntType(),
         ]);
     }

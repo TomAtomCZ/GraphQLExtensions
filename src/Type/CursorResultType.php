@@ -8,8 +8,7 @@
 
 namespace Youshido\GraphQLExtension\Type;
 
-
-use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
+use Youshido\GraphQL\Exception\ConfigurationException;
 use Youshido\GraphQL\Relay\Connection\Connection;
 use Youshido\GraphQL\Relay\Type\PageInfoType;
 use Youshido\GraphQL\Type\AbstractType;
@@ -19,30 +18,31 @@ use Youshido\GraphQL\Type\Object\AbstractObjectType;
 
 class CursorResultType extends AbstractObjectType
 {
-
-    private $edgeType;
+    private AbstractType $edgeType;
 
     public function __construct(AbstractType $edgeType)
     {
         parent::__construct([
-            'name'        => sprintf('Cursor%sResult', $edgeType->getName()),
+            'name' => sprintf('Cursor%sResult', $edgeType->getName()),
             'description' => sprintf('Returns list of type %s in batches', $edgeType->getName())
         ]);
         $this->edgeType = $edgeType;
     }
 
-    public function build($config)
+    /**
+     * @throws ConfigurationException
+     */
+    public function build($config): void
     {
         $config->addFields([
             'pageInfo' => [
-                'type'        => new NonNullType(new PageInfoType()),
+                'type' => new NonNullType(new PageInfoType()),
                 'description' => 'Information to aid in pagination.',
             ],
-            'edges'    => [
-                'type'        => new ListType(Connection::edgeDefinition($this->edgeType)),
+            'edges' => [
+                'type' => new ListType(Connection::edgeDefinition($this->edgeType)),
                 'description' => 'A list of edges.',
             ]
         ]);
     }
-
 }

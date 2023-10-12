@@ -9,46 +9,43 @@ use Youshido\GraphQL\Type\InputObject\AbstractInputObjectType;
 
 class SortingParamsType extends AbstractInputObjectType
 {
-
     /** @var AbstractType */
-    private $type;
+    private AbstractType $type;
 
     /** @var array */
-    private $fields;
+    private array $fields;
 
     /** @var  string */
-    private $prefix;
+    private string $prefix;
 
     public function __construct(AbstractType $type, array $fields)
     {
-        $this->type   = $type;
+        $this->type = $type;
         $this->fields = $fields;
-        $this->prefix = sprintf("%sSorting", $type->getName());
+        $this->prefix = sprintf("%sSorting", $this->type->getName());
 
         parent::__construct([
             'name' => $this->prefix . 'Params'
         ]);
     }
 
-    public function build($config)
+    public function build($config): void
     {
         $config->addFields([
             'field' => [
-                'type'         => new EnumType([
-                    'name'   => $this->prefix . 'Fields',
+                'type' => new EnumType([
+                    'name' => $this->prefix . 'Fields',
                     'values' => array_map(function ($field) {
                         return [
-                            'name'  => $field,
+                            'name' => $field,
                             'value' => $field,
                         ];
                     }, $this->fields)
                 ]),
-                'description'  => 'Field to sort by: ' . implode(', ', $this->fields),
+                'description' => 'Field to sort by: ' . implode(', ', $this->fields),
                 'defaultValue' => 'id',
             ],
             'order' => new SortingOrderType()
         ]);
     }
-
-
 }

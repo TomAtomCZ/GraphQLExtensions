@@ -8,8 +8,6 @@
 
 namespace Youshido\GraphQLExtension\Type;
 
-
-use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\DateTimeType;
 use Youshido\GraphQL\Type\Scalar\IdType;
@@ -18,22 +16,20 @@ use Youshido\GraphQL\Type\Scalar\StringType;
 
 class FileType extends AbstractObjectType
 {
-    public function build($config)
+    public function build($config): void
     {
         $config->addFields([
-            'id'        => new IdType(),
-            'title'     => [
-                'type'        => new StringType(),
+            'id' => new IdType(),
+            'title' => [
+                'type' => new StringType(),
                 'description' => 'Can be used to store a more descriptive title',
             ],
             'createdAt' => new DateTimeType('c'),
             'updatedAt' => new DateTimeType('c'),
-            'url'       => new StringType(),
-            'size'      => new IntType(),
-            'name'      => new StringType(),
+            'url' => new StringType(),
+            'size' => new IntType(),
+            'name' => new StringType(),
             'extension' => new StringType(),
         ]);
     }
-
-
 }

@@ -1,23 +1,22 @@
 <?php
-namespace Youshido\GraphQLExtension\Type\Sorting;
 
+namespace Youshido\GraphQLExtension\Type\Sorting;
 
 use Youshido\GraphQL\Type\Enum\AbstractEnumType;
 
 class SortingOrderType extends AbstractEnumType
 {
-    public function getValues()
+    public function getValues(): array
     {
         return [
             [
-                'name'  => 'ASC',
+                'name' => 'ASC',
                 'value' => 1,
             ],
             [
-                'name'  => 'DESC',
+                'name' => 'DESC',
                 'value' => -1,
             ],
         ];
     }
-
 }

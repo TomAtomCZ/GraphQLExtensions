@@ -8,18 +8,16 @@
 
 namespace Youshido\GraphQLExtension\Type;
 
-use Youshido\GraphQL\Config\Object\InputObjectTypeConfig;
 use Youshido\GraphQL\Type\InputObject\AbstractInputObjectType;
 use Youshido\GraphQL\Type\Scalar\IntType;
 
 class PagingParamsType extends AbstractInputObjectType
 {
-    public function build($config)
+    public function build($config): void
     {
         $this->addFields([
             'offset' => new IntType(),
-            'limit'  => new IntType(),
+            'limit' => new IntType(),
         ]);
     }
-
 }
